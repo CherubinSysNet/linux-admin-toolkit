@@ -10,7 +10,7 @@
 * Gestion des sauvegardes
 * Vérification de l’état du système
 * Génération de rapports JSON
-* Tests automatisés avec ShellCheck et GitHub Actions
+* Tests automatisés avec ShellCheck
 
 ## Installation
 
