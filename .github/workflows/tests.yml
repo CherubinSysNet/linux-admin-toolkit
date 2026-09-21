@@ -1,0 +1,54 @@
+name: Bash Quality Checks
+
+
+on:
+
+  push:
+
+  pull_request:
+
+
+jobs:
+
+  shellcheck:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout repository
+
+        uses: actions/checkout@v4
+
+
+      - name: Install ShellCheck
+
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+
+      - name: Run ShellCheck
+
+        run: shellcheck bin/lat lib/*.sh modules/**/*.sh tests/*.sh
+
+
+  tests:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout repository
+
+        uses: actions/checkout@v4
+
+
+      - name: Set permissions
+
+        run: chmod +x bin/lat tests/test_core.sh
+
+
+      - name: Run tests
+
+        run: bash tests/test_core.sh

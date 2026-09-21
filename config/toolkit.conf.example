@@ -1,0 +1,14 @@
+# Linux Admin Toolkit configuration
+
+
+# Copy this file to toolkit.conf before customizing it.
+
+
+LAT_REPORT_DIR="/var/tmp/linux-admin-toolkit/reports"
+
+LAT_LOG_DIR="/var/tmp/linux-admin-toolkit/logs"
+
+
+# Optional backup directory
+
+LAT_BACKUP_DIR="/var/tmp/linux-admin-toolkit/backups"

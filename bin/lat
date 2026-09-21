@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+
+
+set -Eeuo pipefail
+
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+
+export LAT_ROOT="$ROOT_DIR"
+
+
+source "$ROOT_DIR/lib/common.sh"
+
+source "$ROOT_DIR/lib/logger.sh"
+
+source "$ROOT_DIR/lib/config.sh"
+
+source "$ROOT_DIR/lib/validators.sh"
+
+source "$ROOT_DIR/lib/ui.sh"
+
+
+usage() {
+
+    printf '\n'
+
+
+    ui_header "Linux Admin Toolkit" "System administration and automation"
+
+
+    ui_section "COMMANDS"
+
+
+    ui_label "system monitor" "System monitoring"
+
+    ui_label "network diagnose" "Network diagnostics"
+
+    ui_label "security audit" "Security audit"
+
+    ui_label "backup create" "Create backup"
+
+    ui_label "backup restore" "Restore backup"
+
+    ui_label "maintenance health" "System health check"
+
+    ui_label "report generate" "Generate system report"
+
+
+    ui_section "EXAMPLE"
+
+
+    printf '  '
+
+    ui_color "$GRAY" "lat"
+
+    printf ' '
+
+    ui_color "$LIME" "system monitor"
+
+    printf '\n'
+
+
+    ui_footer
+
+}
+
+
+main() {
+
+    load_config
+
+
+    local category="${1:-}"
+
+    local action="${2:-}"
+
+
+    if [[ "$category" == "--help" || -z "$category" ]]; then
+
+        usage
+
+        return 0
+
+    fi
+
+
+    shift 2 || true
+
+
+    case "$category:$action" in
+
+
+        system:monitor)
+
+            source "$LAT_ROOT/modules/system/monitor.sh"
+
+            system_monitor "$@"
+
+            ;;
+
+
+        network:diagnose)
+
+            source "$LAT_ROOT/modules/network/diagnostics.sh"
+
+            network_diagnose "$@"
+
+            ;;
+
+
+        security:audit)
+
+            source "$LAT_ROOT/modules/security/audit.sh"
+
+            security_audit "$@"
+
+            ;;
+
+
+        backup:create)
+
+            source "$LAT_ROOT/modules/backup/manager.sh"
+
+            backup_create "$@"
+
+            ;;
+
+
+        backup:restore)
+
+            source "$LAT_ROOT/modules/backup/manager.sh"
+
+            backup_restore "$@"
+
+            ;;
+
+
+        maintenance:health)
+
+            source "$LAT_ROOT/modules/maintenance/health.sh"
+
+            maintenance_health "$@"
+
+            ;;
+
+
+        report:generate)
+
+            source "$LAT_ROOT/modules/system/monitor.sh"
+
+            report_generate "$@"
+
+            ;;
+
+
+        *)
+
+            ui_header "Unknown Command"
+
+
+            ui_status error "Command not found: $category $action"
+
+
+            usage
+
+            return 1
+
+            ;;
+
+    esac
+
+}
+
+
+main "$@"

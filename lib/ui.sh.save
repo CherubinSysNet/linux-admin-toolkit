@@ -1,0 +1,71 @@
+ui_header() {
+
+    local title="$1"
+
+    local subtitle="${2:-}"
+
+    local brand="  MANDRIVA / LINUX ADMIN TOOLKIT"
+
+
+    local brand_length=${#brand}
+
+    local title_length=${#title}
+
+    local subtitle_length=${#subtitle}
+
+
+    printf '\n'
+
+
+    printf '╭%s╮\n' \
+
+        "$(printf '%*s' "$UI_WIDTH" '' | tr ' ' '─')"
+
+
+    printf '│'
+
+
+    ui_color "$LIME" "  MANDRIVA"
+
+    ui_color "$GRAY" " / "
+
+    ui_color "$WHITE" "LINUX ADMIN TOOLKIT"
+
+
+    printf '%*s│\n' \
+
+        "$((UI_WIDTH - brand_length))" ''
+
+
+    printf '├%s┤\n' \
+
+        "$(printf '%*s' "$UI_WIDTH" '' | tr ' ' '─')"
+
+
+    printf '│  '
+
+    ui_color "$WHITE" "${title^^}"
+
+
+    printf '%*s│\n' \
+
+        "$((UI_WIDTH - title_length - 2))" ''
+
+
+    if [[ -n "$subtitle" ]]; then
+
+        printf '│  '
+
+        ui_color "$GRAY" "$subtitle"
+
+
+        printf '%*s│\n' \
+
+            "$((UI_WIDTH - subtitle_length - 2))" ''
+
+    fi
+
+
+    printf '│%*s│\n' "$UI_WIDTH" ''
+
+}
